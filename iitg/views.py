@@ -34,10 +34,14 @@ def home(request):
     student=Student.objects.get(pk=request.user.student.id)
     return render(request, 'home.html',{'student':student})
 
+@login_required
+def my_pages(request):
+    student=Student.objects.get(pk=request.user.student.id)
+    return render(request, 'my_pages.html',{'student':student})
 
 class StudentCreate(CreateView):
     model = Student
-    fields=['user','rollNo','pages']
+    fields=['user','rollNo']
     success_url = reverse_lazy('home')
 
 class PageDetailView(generic.DetailView):

@@ -6,8 +6,8 @@
 {% load staticfiles %}
 <div class="uk-text-center"><h1>Events</h1></div><hr>
 <div class="uk-flex uk-flex-around uk-flex-wrap">
-    {% for page in student.pages.all %}
-    {% for event in page.event.all %}{{event.id}}
+    {% for page in student.subscribed_pages.all %}
+    {% for event in page.event.all %}
     {% comment %} <a href="{{ event.get_absolute_url }}" class="uk-button uk-button-text"> {% endcomment %}
           <div class="uk-card uk-card-hover uk-card-default uk-grid-collapse uk-child-width-1-2@s uk-margin" uk-grid>
                 {% comment %} <div class="uk-card-media-left uk-cover-container">

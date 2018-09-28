@@ -1,19 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}{{page.name}}{% endblock %}
+{% block title %}My pages{% endblock %}
 
 {% block content %}
 {% load staticfiles %}
-<div class="uk-text-center"><h1>{{page.name}}</h1>{{page.admins.all}}{{request.user}}
-    {% if request.user in page.admins.all %}
-        <a href="" class="uk-button uk-button-primary">Add an event</a>
-    {% else %}
-        <a href="" class="uk-button uk-button-primary">Subscribe</a>
-    {% endif %}
-    </div><hr>
-    <div class="uk-flex uk-flex-around uk-flex-wrap">
-    {% for event in page.event.all %}
-    {% comment %} <a href="{{ event.get_absolute_url }}" class="uk-button uk-button-text"> {% endcomment %}
+<div class="uk-text-center"><h1>Select page to view/edit</h1></div><hr>
+<div class="uk-flex uk-flex-around uk-flex-wrap">
+    {% for page in student.my_pages.all %}
+    <a href="{{ page.get_absolute_url }}" class="uk-button uk-button-text">
           <div class="uk-card uk-card-hover uk-card-default uk-grid-collapse uk-child-width-1-2@s uk-margin" uk-grid>
                 {% comment %} <div class="uk-card-media-left uk-cover-container">
                     {% if video.thumbnail %}
@@ -25,12 +19,13 @@
                 </div> {% endcomment %}
                 {% comment %} <div>
                     <div class="uk-card-body"> {% endcomment %}
-                        <h6 class="uk-card-title">{{ event.name }}</h6>
-                        <div class="uk-card-footer uk-text-muted uk-text-small">{{ event.time }}</div>
+                        <h6 class="uk-card-title">{{ page.name }}</h6>
+
+                        <div class="uk-card-footer uk-text-muted uk-text-small">{{ page.description }}</div>
                     {% comment %} </div> {% endcomment %}
                 </div>
             </div>
-        {% comment %} </a> {% endcomment %}
+        </a>
     {% endfor %}
     </div>
 {% endblock %}
