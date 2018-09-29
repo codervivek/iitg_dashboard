@@ -52,9 +52,12 @@ expo start
 ## Screenshots
 
 ![Screenshot 1](https://github.com/codervivek/iitg_dashboard/blob/master/1.png "Create Event")
-
+Creating an Event
 
 ![Screenshot 2](https://github.com/codervivek/iitg_dashboard/blob/master/2.png "Dashboard")
+list of events created
 
+![Screenshot 3](https://github.com/codervivek/iitg_dashboard/blob/master/3.png "Dashboard")
+Event automatically made in google calendar
 
 
