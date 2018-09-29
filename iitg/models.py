@@ -29,7 +29,7 @@ class Deadline(models.Model):
     description=models.TextField(max_length=2000, help_text="Enter description",blank=True, null=True)
 
      
-    perDone = models.IntegerField(help_text="Percentage remaining")    
+    perDone = models.IntegerField(help_text="Percentage remaining",default=0)    
 
     deadline = models.DateTimeField(default=timezone.now)
 
@@ -41,6 +41,9 @@ class Student(models.Model):
     user=models.OneToOneField(User, help_text="a",related_name='student',on_delete=models.CASCADE)
 
     rollNo=models.IntegerField(help_text="Enter your IITG roll No.")
+
+    key=models.TextField(max_length=2000, help_text="Enter page name",blank=True, null=True)
+
 
     def __str__(self):
         return "%s" % (self.user.username)

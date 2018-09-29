@@ -4,7 +4,7 @@ from django.shortcuts import render
 from .forms import SignUpForm,CreatePageForm
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
-from .models import Student, Event, Page
+from .models import Student, Event, Page, Deadline
 from django.db.models import Max
 from django.views import generic
 from django.contrib.auth.models import User
@@ -40,12 +40,13 @@ def my_pages(request):
     student=Student.objects.get(pk=request.user.student.id)
     return render(request, 'my_pages.html',{'student':student})
 
+
 class StudentCreate(CreateView):
     model = Student
     fields=['user','rollNo']
     success_url = reverse_lazy('home')
 
-
+@login_required
 def page_detail(request,pk):
     page=Page.objects.get(pk=pk)
     # print(request.user)
@@ -54,6 +55,7 @@ def page_detail(request,pk):
         return render(request, 'iitg/page_detail.html', {'page': page,'x':'Add an event','y':'create_event'})
     return render(request, 'iitg/page_detail.html', {'page': page,'x':'Subscribe','y':'subscribe'})
 
+@login_required
 def CreatePage(request):
     if request.method == 'POST':
         form = CreatePageForm(request.POST)
@@ -65,11 +67,13 @@ def CreatePage(request):
             user = Student.objects.get(user=request.user)
             obj.admins.add(user)
             obj.students.add(user)
+            obj.save()
 
             return redirect('home')
     else:
         form = CreatePageForm()
     return render(request, 'page_form.html', {'form': form})
+
 
 class EventCreate(CreateView):
     model = Event
@@ -80,7 +84,34 @@ class EventCreate(CreateView):
         page=Page.objects.get(pk=self.kwargs['xy'])
         page.event.add(event)
         page.save()
-        return reverse_lazy( 'home')
+        return reverse_lazy('home')
+
+class DeadlineCreate(CreateView):
+    model = Deadline
+    fields=['name','totalTime','description','deadline']
+    def get_success_url(self):
+        deadline = self.object
+        print(self.kwargs)
+        page=Page.objects.get(pk=self.kwargs['xy'])
+        page.deadline.add(deadline)
+        page.save()
+        return reverse_lazy('home')
 
 class PageListView(generic.ListView):
     model=Page
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+
+
+@csrf_exempt 
+def appkey(request):
+    json_data = json.loads(request.body.decode("utf-8"))
+    user=User.objects.filter(email=json_data['email'])
+    return JsonResponse({'key':user.first().id})
+
+def subscribe(request,pk):
+    page=Page.objects.get(pk=pk)
+    page.students.add(request.user.student)
+    return render(request,'subscribe.html')
