@@ -45,15 +45,14 @@ class StudentCreate(CreateView):
     fields=['user','rollNo']
     success_url = reverse_lazy('home')
 
-class PageDetailView(generic.DetailView):
-    model=Page
-    fields=['deadline', 'event', 'name', 'description']
-    def get_success_url(self):
-        page = self.object
-        if self.request.user in page.admins.all:
-            return render(request, 'home.html', {'page': page,'x':0})
-        return reverse_lazy( 'professor_update', kwargs={'pk': professor.id})
-    success_url=reverse_lazy('home')
+
+def page_detail(request,pk):
+    page=Page.objects.get(pk=pk)
+    # print(request.user)
+    # print(list(page.admins.all()))
+    if page.admins.filter(pk=request.user.id).exists():
+        return render(request, 'iitg/page_detail.html', {'page': page,'x':'Add an event','y':'create_event'})
+    return render(request, 'iitg/page_detail.html', {'page': page,'x':'Subscribe','y':'subscribe'})
 
 def CreatePage(request):
     if request.method == 'POST':
@@ -71,3 +70,17 @@ def CreatePage(request):
     else:
         form = CreatePageForm()
     return render(request, 'page_form.html', {'form': form})
+
+class EventCreate(CreateView):
+    model = Event
+    fields=['name','description','time']
+    def get_success_url(self):
+        event = self.object
+        print(self.kwargs)
+        page=Page.objects.get(pk=self.kwargs['xy'])
+        page.event.add(event)
+        page.save()
+        return reverse_lazy( 'home')
+
+class PageListView(generic.ListView):
+    model=Page

@@ -58,7 +58,7 @@
                 {% endblock %} {% endcomment %}
                     </div>
             <div class="uk-navbar-right">
-                {% comment %} <a href="{% url 'page_list'%}" class="uk-button uk-button-default">Find Pages</a> {% endcomment %}
+                <a href="{% url 'page_list'%}" class="uk-button uk-button-default">Find Pages</a>
                 {% if user.is_authenticated %}
                 <a href="{% url 'logout'%}?next={{request.path}}" class="uk-button uk-button-default">Logout</a>
                 {% endif %}

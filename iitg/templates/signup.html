@@ -5,6 +5,8 @@
 {% block content %}
 <div class="uk-flex-middle">
 <div class="uk-card uk-card-default">
+  <div class="uk-card uk-card-hover">
+
   <div class="uk-card-header">
     <h1 class="uk-text-center">Sign up</h1>
   </div>
@@ -18,8 +20,8 @@
             <div class="form-group" uk-grid>
                 <div class="uk-width-1-4@m">
                   <h5>{{ field.label_tag }}</h5>
-                </div> 
-                <div class="uk-width-1-4@m">{{ field }}</div> 
+                </div>
+                <div class="uk-width-1-4@m">{{ field }}</div>
                 {% if field.help_text %}<div class="uk-form-label uk-text-muted uk-width-1-2@m">{{ field.help_text }}</div>{% endif %}
                 {% if field.errors %}
                 <div class="uk-width-1-1@m">
@@ -34,10 +36,12 @@
               </div><hr>
         {% endfor %}
           </table><hr><div class="uk-text-center">
-          <input type="submit" value="Submit" class="uk-button uk-button-default"/></div>
+          <input type="submit" value="Submit" class="uk-button uk-button-primary" /></div>
           </div>
       </form>
   </div>
-</div> 
+
+</div>
+</div>
 </div>
 {% endblock %}
