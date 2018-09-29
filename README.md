@@ -49,7 +49,12 @@ Finally run following command to run the mobileApp
 cd <directory>
 expo start
 ```
+## Screenshots
 
+![Screenshot 1](https://github.com/codervivek/iitg_dashboard/blob/master/1.png "Create Event")
+
+
+![Screenshot 2](https://github.com/codervivek/iitg_dashboard/blob/master/2.png "Dashboard")
 
 
 
