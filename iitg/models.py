@@ -12,7 +12,8 @@ class Event(models.Model):
 
     description=models.TextField(max_length=2000, help_text="Enter description",blank=True, null=True)
 
-
+    link=models.CharField(max_length=2000,blank=True,null=True)
+    
     time = models.DateTimeField(default=timezone.now)
 
     totalTime =models.IntegerField(help_text="Enter Time required in hours to complete the work")
@@ -30,8 +31,8 @@ class Deadline(models.Model):
 
     description=models.TextField(max_length=2000, help_text="Enter description",blank=True, null=True)
 
-     
-    perDone = models.IntegerField(help_text="Percentage remaining",default=0)    
+
+    perDone = models.IntegerField(help_text="Percentage remaining",default=0)
 
     deadline = models.DateTimeField(default=timezone.now)
 
@@ -60,7 +61,7 @@ class Page(models.Model):
     event = models.ManyToManyField(Event,blank=True, null=True)
 
     deadline = models.ManyToManyField(Deadline, help_text='Deadline of the page',blank=True, null=True)
-    
+
     admins = models.ManyToManyField(Student, help_text='Select page(s) which you want to subscribe',related_name='my_pages')
 
     students = models.ManyToManyField(Student, help_text='Select page(s) which you want to subscribe',related_name='subscribed_pages')
@@ -74,8 +75,5 @@ class Page(models.Model):
 
 
 
-    
+
     # activeEvent=models.ForeignKey(Event, related_name="events", on_delete=models.CASCADE, help_text="a",blank=True, null=True)
-
-
-

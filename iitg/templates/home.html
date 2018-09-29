@@ -23,7 +23,9 @@
                         <h6 class="uk-card-title">{{ event.name }}</h6>
                         <div class="uk-card-footer uk-text-muted uk-text-small">{{ event.time }}</div>
                     {% comment %} </div> {% endcomment %}
+                      <a href="{{ event.link }}"  class="uk-button uk-button-primary">Add to my Calendar</a>
                 </div>
+
             </div>
         {% comment %} </a> {% endcomment %}
     {% endfor %}
