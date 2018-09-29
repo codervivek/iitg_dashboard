@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}{{ video.name }}{% endblock %}
+{% block search %}<form id="searchform" action="{% url 'sceneSearch' %}" method="get" accept-charset="utf-8">
+                <input class="uk-input uk-form-width-large" type="text" placeholder="Search in {{video.name}}" aria-label="Search" name="transcript" id="searchbox">
+                <input class="uk-input uk-form-width-large" type="hidden" placeholder="Search" name="movie" value="{{video.name}}">
+                <button class="uk-button uk-button-primary" type="submit">Search</button>
+              </form> {% endblock %}
+
+{% block container %}
+<div class="uk-container-fluid">
+{% block content %}
+<div class="uk-text-center">
+<button id="actors" class="uk-button uk-button-large">Show Insights</button></div>
+<div class="uk-card uk-card-default uk-card-large uk-card-body">
+        <div class="uk-card-media-top">
+            {% if video.adult %}
+          <iframe src="https://www.videoindexer.ai/embed/player/xyz" id="myIframe" frameborder="0" allowfullscreen></iframe>
+          {% else %}
+          <iframe src="https://www.videoindexer.ai/embed/player/{{video.embed}}" id="myIframe" frameborder="0" allowfullscreen></iframe>
+          {% endif %}
+              <iframe width="580" height="780" src="https://www.videoindexer.ai/embed/insights/{{video.embed}}/" frameborder="0" allowfullscreen></iframe>
+        </div>
+    <h3 class="uk-card-title uk-text-center">{{video.name}}</h3>
+</div>
+<button class="uk-button uk-button-default" href="#modal-center" type="hidden" id="moderation-modal"  uk-toggle></button>
+
+<div id="modal-center" class="uk-flex-top" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+
+        <p>Caution, Adult Content!</p>
+        <p class="uk-text-right">
+          <a class="uk-button uk-button-primary" type="button" href="{% url 'home' %}">Go Home</a>
+          <button class="uk-button uk-button-default uk-modal-close" type="button" id="continue">Continue Watching</button>
+      </p>
+    </div>
+</div>
+{% endblock %}
+</div>
+{% endblock %}
+{% block extra_js %}
+<script type="text/javascript" language="javascript"> 
+$('#myIframe').css('height', $(window).height()*.7*.75+'px');
+</script>
+{% if video.adult %}
+<script type="text/javascript" language="javascript">
+  document.getElementById("moderation-modal").click();
+  document.getElementById("continue").addEventListener("click", function(){
+    document.getElementById("myIframe").src="https://www.videoindexer.ai/embed/player/{{video.embed}}";
+  });
+  </script>
+  {% else %}
+  <script type="text/javascript" language="javascript">
+    $(window).load(function(){
+      document.getElementById("myIframe").src="https://www.videoindexer.ai/embed/player/{{video.embed}}";
+    });
+    </script>
+  {% endif %}
+{% endblock extra_js %}  
