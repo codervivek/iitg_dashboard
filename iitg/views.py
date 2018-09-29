@@ -86,7 +86,7 @@ def CreatePage(request):
 
 class EventCreate(CreateView):
     model = Event
-    fields=['name','description','time']
+    fields=['name','description','time','totalTime']
     def get_success_url(self):
         event = self.object
         print(self.kwargs)
