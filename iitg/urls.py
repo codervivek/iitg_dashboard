@@ -17,5 +17,8 @@ urlpatterns = [
     url(r'^appkey$', views.appkey, name='appkey'),
     url(r'^subscribe/(?P<pk>\d+)$', views.subscribe, name='subscribe'),
     url(r'^list$', views.listing, name='list'),
+    url(r'^events$', views.event_app, name='event_app'),
+    url(r'^deadlines$', views.deadlines_app, name='deadlines_app'),
+    
 ]
 

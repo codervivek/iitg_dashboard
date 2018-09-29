@@ -51,7 +51,8 @@ def page_detail(request,pk):
     page=Page.objects.get(pk=pk)
     # print(request.user)
     # print(list(page.admins.all()))
-    if page.admins.filter(pk=request.user.id).exists():
+    if page.admins.filter(pk=request.user.student.id).exists():
+        print("hi")
         return render(request, 'iitg/page_detail.html', {'page': page,'x':'Add an event','y':'create_event'})
     return render(request, 'iitg/page_detail.html', {'page': page,'x':'Subscribe','y':'subscribe'})
 
@@ -132,6 +133,26 @@ def listing(request):
     # answer_ids = set(answer.id for answer in events)
     # existing_question_answers = filter(lambda x: x.answer.id not in answers_id, existing_question_answers)
     # print(existing_question_answers)
-    for event in list(events):
-        while(deadline.)
+    # for event in list(events):
+        # while(deadline.)
     return JsonResponse({'success':'true'})
+
+from django.core import serializers
+
+def event_app(request):
+    x=[]
+    for page in request.user.student.subscribed_pages.all():
+        # for event in page.event.all():
+        x.append(serializers.serialize('json',page.event.all()))
+    # events = request.user.student.annotate(
+    #     t=Max("time")
+    # ).order_by("t")
+    # json_data=serializers.serialize('json',events)
+    return JsonResponse({'events':x})
+
+def deadlines_app(request):
+    deadline = Deadline.objects.annotate(
+        t=Max("time")
+    ).order_by("t")
+    json_data=serializers.serialize('json',deadline)
+    return JsonResponse(json)
