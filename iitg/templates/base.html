@@ -35,10 +35,16 @@
             {% if user.is_authenticated %}
             <ul class="uk-navbar-nav">
                 <li>
-                    {% comment %} <a href="{% url 'my_pages' %}">
+                    <a href="{% url 'my_pages' %}">
                         <span class="uk-icon uk-margin-small-right" uk-icon="icon: star"></span>
                         My Pages
-                    </a> {% endcomment %}
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'createpage' %}">
+                        <span class="uk-icon uk-margin-small-right" uk-icon="icon: star"></span>
+                        Create a Page
+                    </a>
                 </li>
             </ul>
             {% endif %}
