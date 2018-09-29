@@ -31,7 +31,6 @@ class Deadline(models.Model):
 
     description=models.TextField(max_length=2000, help_text="Enter description",blank=True, null=True)
 
-
     perDone = models.IntegerField(help_text="Percentage remaining",default=0)
 
     deadline = models.DateTimeField(default=timezone.now)

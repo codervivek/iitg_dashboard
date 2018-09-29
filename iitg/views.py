@@ -177,9 +177,11 @@ from django.core import serializers
 
 def event_app(request):
     x=[]
+    y=[]
     for page in request.user.student.subscribed_pages.all():
         # for event in page.event.all():
-        x.append(serializers.serialize('json',page.event.all()))
+        y=serializers.serialize('json',page.event.all())
+        x.append()
     # events = request.user.student.annotate(
     #     t=Max("time")
     # ).order_by("t")
