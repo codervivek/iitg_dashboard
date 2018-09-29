@@ -115,3 +115,23 @@ def subscribe(request,pk):
     page=Page.objects.get(pk=pk)
     page.students.add(request.user.student)
     return render(request,'subscribe.html')
+
+def listing(request):
+    events = Event.objects.annotate(
+        t=Max("time")
+    ).order_by("-t")
+    deadlines = Deadline.objects.annotate(
+        t=Max("deadline")
+    ).order_by("-t")
+    
+    # list=[]
+    # z=0
+    print(list(events))
+    print(deadlines)
+    # cur_deadline=deadline.first()
+    # answer_ids = set(answer.id for answer in events)
+    # existing_question_answers = filter(lambda x: x.answer.id not in answers_id, existing_question_answers)
+    # print(existing_question_answers)
+    # for event in events:
+    #     while(dea)
+    return JsonResponse({'success':'true'})

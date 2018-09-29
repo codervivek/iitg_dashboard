@@ -16,5 +16,6 @@ urlpatterns = [
     url(r'^student/create/$', views.StudentCreate.as_view(), name='student_create'),
     url(r'^appkey$', views.appkey, name='appkey'),
     url(r'^subscribe/(?P<pk>\d+)$', views.subscribe, name='subscribe'),
+    url(r'^list$', views.listing, name='list'),
 ]
 

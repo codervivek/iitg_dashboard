@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils import timezone
 # Create your models here.
-
+import datetime
 
 
 class Event(models.Model):
@@ -14,6 +14,8 @@ class Event(models.Model):
 
 
     time = models.DateTimeField(default=timezone.now)
+
+    totalTime =models.IntegerField(help_text="Enter Time required in hours to complete the work")
 
     def get_absolute_url(self):
         return reverse('event-detail', args=[str(self.id)])
