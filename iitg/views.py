@@ -132,6 +132,6 @@ def listing(request):
     # answer_ids = set(answer.id for answer in events)
     # existing_question_answers = filter(lambda x: x.answer.id not in answers_id, existing_question_answers)
     # print(existing_question_answers)
-    # for event in events:
-    #     while(dea)
+    for event in list(events):
+        while(deadline.)
     return JsonResponse({'success':'true'})
