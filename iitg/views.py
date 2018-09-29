@@ -1,3 +1,4 @@
+from __future__ import print_function
 from django.shortcuts import render
 
 # Create your views here.
@@ -12,6 +13,13 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from iitg import models
+import datetime
+from googleapiclient.discovery import build
+from httplib2 import Http
+from oauth2client import file, client, tools
+
+# If modifying these scopes, delete the file token.json.
+SCOPES = 'https://www.googleapis.com/auth/calendar'
 
 def signup(request):
     if request.method == 'POST':
@@ -83,6 +91,34 @@ class EventCreate(CreateView):
         event = self.object
         print(self.kwargs)
         page=Page.objects.get(pk=self.kwargs['xy'])
+
+        # 2018-09-27T17:00:00
+        store = file.Storage('token.json')
+        creds = store.get()
+        if not creds or creds.invalid:
+            flow = client.flow_from_clientsecrets('credentials.json', SCOPES)
+            creds = tools.run_flow(flow, store)
+        service = build('calendar', 'v3', http=creds.authorize(Http()))
+        s = str(event.time).split(' ')
+        p = s[1].split(':')
+        t = s[0]   +   'T'   +   str(int(p[0])+1)   +  ':'  +   ':'.join(p[1:])
+        rem = {
+            'summary' : event.name,
+            'description' : event.description,
+            'start' : {
+                'dateTime' : 'T'.join(str(event.time).split(' ')),
+                'timeZone' : "Asia/Kolkata",
+            },
+            'end' : {
+                'dateTime' : t,
+                'timeZone' : "Asia/Kolkata",
+            },
+        }
+        rem = service.events().insert(calendarId='primary', body=rem).execute()
+        print ('Event created: %s' % (rem.get('htmlLink')))
+
+        event.link = rem.get('htmlLink')
+        event.save()
         page.event.add(event)
         page.save()
         return reverse_lazy('home')
@@ -106,7 +142,7 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 
 
-@csrf_exempt 
+@csrf_exempt
 def appkey(request):
     json_data = json.loads(request.body.decode("utf-8"))
     user=User.objects.filter(email=json_data['email'])
