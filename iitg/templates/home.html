@@ -9,7 +9,7 @@
     {% for page in student.subscribed_pages.all %}
     {% for deadline in page.deadline.all %}
     {% comment %} <a href="{{ event.get_absolute_url }}" class="uk-button uk-button-text"> {% endcomment %}
-          <div class="uk-card uk-card-hover uk-card-default uk-grid-collapse uk-child-width-1-2@s uk-margin" uk-grid>
+          <div class="uk-card uk-card-hover uk-card-default uk-grid-collapse uk-margin" uk-grid>
                 {% comment %} <div class="uk-card-media-left uk-cover-container">
                     {% if video.thumbnail %}
                     <img src="{{video.thumbnail}}" alt="" uk-cover >
@@ -30,7 +30,7 @@
     {% endfor %}
     {% for event in page.event.all %}
     {% comment %} <a href="{{ event.get_absolute_url }}" class="uk-button uk-button-text"> {% endcomment %}
-          <div class="uk-card uk-card-hover uk-card-default uk-grid-collapse uk-child-width-1-2@s uk-margin" uk-grid>
+          <div class="uk-card uk-card-hover uk-card-default uk-grid-collapse uk-margin" uk-grid>
                 {% comment %} <div class="uk-card-media-left uk-cover-container">
                     {% if video.thumbnail %}
                     <img src="{{video.thumbnail}}" alt="" uk-cover >
