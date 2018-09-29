@@ -48,6 +48,11 @@ class StudentCreate(CreateView):
 class PageDetailView(generic.DetailView):
     model=Page
     fields=['deadline', 'event', 'name', 'description']
+    def get_success_url(self):
+        page = self.object
+        if self.request.user in page.admins.all:
+            return render(request, 'home.html', {'page': page,'x':0})
+        return reverse_lazy( 'professor_update', kwargs={'pk': professor.id})
     success_url=reverse_lazy('home')
 
 def CreatePage(request):
@@ -65,4 +70,4 @@ def CreatePage(request):
             return redirect('home')
     else:
         form = CreatePageForm()
-    return render(request, 'signup.html', {'form': form})
+    return render(request, 'page_form.html', {'form': form})
